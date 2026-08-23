@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+ android:background="#101418" android:layout_width="match_parent" android:layout_height="match_parent">
+ <LinearLayout android:orientation="vertical" android:padding="18dp" android:layout_width="match_parent" android:layout_height="wrap_content">
+  <TextView android:text="🤖 TX ROBOT AI" android:textColor="#FFFFFF" android:textSize="28sp" android:textStyle="bold" android:gravity="center" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+  <TextView android:text="Phân tích thống kê • Không đảm bảo kết quả" android:textColor="#9AA4AD" android:gravity="center" android:layout_marginTop="6dp" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+  <TextView android:id="@+id/session" android:text="PHIÊN #1" android:textColor="#FFFFFF" android:textSize="20sp" android:layout_marginTop="24dp" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+  <TextView android:id="@+id/history" android:text="Lịch sử: —" android:textColor="#D7DEE5" android:textSize="18sp" android:layout_marginTop="12dp" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+  <TextView android:id="@+id/result" android:text="DỰ BÁO THAM KHẢO: —" android:textColor="#00E676" android:textSize="24sp" android:textStyle="bold" android:gravity="center" android:padding="24dp" android:layout_marginTop="20dp" android:background="#182027" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+  <TextView android:id="@+id/confidence" android:text="Tài 50% • Xỉu 50%" android:textColor="#FFFFFF" android:textSize="18sp" android:gravity="center" android:layout_marginTop="12dp" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+  <EditText android:id="@+id/input" android:hint="Nhập kết quả phiên: T hoặc X" android:inputType="textCapCharacters" android:textColor="#FFFFFF" android:hintTextColor="#77828C" android:layout_marginTop="24dp" android:padding="14dp" android:background="#182027" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+  <Button android:id="@+id/add" android:text="THÊM KẾT QUẢ" android:layout_marginTop="12dp" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+  <Button android:id="@+id/analyze" android:text="🤖 PHÂN TÍCH PHIÊN TIẾP" android:layout_marginTop="8dp" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+  <Button android:id="@+id/reset" android:text="XÓA LỊCH SỬ" android:layout_marginTop="8dp" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+  <TextView android:text="Lưu ý: Tài/Xỉu là kết quả ngẫu nhiên; thống kê quá khứ không dự đoán chắc chắn phiên sau." android:textColor="#FFCC80" android:textSize="14sp" android:layout_marginTop="20dp" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+ </LinearLayout>
+</ScrollView>
