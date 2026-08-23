@@ -1,42 +1,47 @@
 name: Build APK
 
-on: [push, workflow_dispatch]
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      
-      - name: Unzip project files
-        run: |
-          ZIP_FILE=$(find . -maxdepth 2 -name "*.zip" | head -n 1)
-          if [ -n "$ZIP_FILE" ]; then
-            unzip -o "$ZIP_FILE"
-          fi
+    - uses: actions/checkout@v4
 
-      - name: Force Delete hintTextColor lines
-        run: |
-          find . -name "*.xml" -type f -exec sed -i '/hintTextColor/d' {} +
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
 
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
-        with:
-          java-version: '17'
-          distribution: 'temurin'
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v3
 
-      - name: Build APK with Gradle
-        run: |
-          GRADLE_EXEC=$(find . -name "gradlew" | head -n 1)
-          if [ -n "$GRADLE_EXEC" ]; then
-            chmod +x $GRADLE_EXEC
-            $GRADLE_EXEC assembleDebug --no-daemon
-          else
-            gradle assembleDebug --no-daemon
-          fi
+    - name: Fix Directory Structure & Resources
+      run: |
+        # 1. Tạo cấu trúc thư mục Android chuẩn
+        mkdir -p app/src/main/res/layout
+        mkdir -p app/src/main/res/values
+        mkdir -p app/src/main/java/com/example/txrobotai
 
-      - name: Upload APK Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: TX_Robot_AI_App
-          path: '**/*.apk'
+        # 2. Chuyển các file ngoài root vào đúng vị trí nếu chưa đúng
+        [ -f activity_main.xml ] && mv activity_main.xml app/src/main/res/layout/ || true
+        [ -f styles.xml ] && mv styles.xml app/src/main/res/values/ || true
+        [ -f AndroidManifest.xml ] && mv AndroidManifest.xml app/src/main/ || true
+        [ -f MainActivity.java ] && mv MainActivity.java app/src/main/java/com/example/txrobotai/ || true
+
+        # 3. Sửa triệt để lỗi hintTextColor trong tất cả file xml (nếu còn sót)
+        find app/src/main/res -name "*.xml" -exec sed -i 's/android:hintTextColor/android:textColorHint/g' {} +
+
+    - name: Build APK with Gradle
+      run: gradle assembleDebug
+
+    - name: Upload APK Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: TX_Robot_AI_App
+        path: app/build/outputs/apk/debug/app-debug.apk
